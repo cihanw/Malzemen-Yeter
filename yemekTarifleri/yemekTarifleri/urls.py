@@ -20,8 +20,5 @@ from tarifler import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', include('tarifler.urls')),
-    path('tarif-ekle/', include('tarifler.urls')),  # tarif ekleme URL'si
-    path('', views.tarif_listesi, name='tarif_listesi'),  # Ana sayfa yönlendirmesi
-    
+    path('', include('tarifler.urls')),
 ]

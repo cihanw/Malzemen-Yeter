@@ -4,8 +4,9 @@ from .views import tarif_listesi
 from . import views
 
 urlpatterns = [
-    path('', tarif_listesi, name='tarif_listesi'),
-    path('tarif-filtrele/', views.tarif_filtrele, name='tarif_filtrele'),
-    path('tarif-ekle/', views.tarif_ekle, name='tarif_ekle'),  # Tarif ekleme sayfası için URL
+    path('', views.index, name='index'),  # Ana sayfa için index view'ını tanımlıyoruz
+    path('tarifler/', views.tarif_listesi, name='tarif_listesi'),
+    path('tarifler/ekle/', views.tarif_ekle, name='tarif_ekle'),
+    # Diğer URL desenlerini buraya ekleyebilirsiniz
 ]
 

@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'yemek_tarifleri_db',
         'USER': 'root',  # MySQL kullanıcı adı
-        'PASSWORD': 'kaan',  # MySQL şifreniz
+        'PASSWORD': '250698Aa',  # MySQL şifreniz
         'HOST': 'localhost',
         'PORT': '3306',
     }

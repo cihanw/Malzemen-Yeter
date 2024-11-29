@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tarif Listesi</title>
-</head>
-<body>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{% url 'index' %}">Anasayfa</a></li>
+        <li><a href="{% url 'tarif_listesi' %}">Tarif Listesi</a></li>
+        <li><a href="{% url 'tarif_ekle' %}">Tarif Ekle</a></li>
+      </ul>
+    </nav>
+
     <h1>Tarifler</h1>
     <ul>
-        {% for tarif in tarifler %}
-            <li>{{ tarif.baslik }} - {{ tarif.kategori }}</li>
-        {% endfor %}
+      {% for tarif in tarifler %}
+      <li>{{ tarif.baslik }} - {{ tarif.kategori }}</li>
+      {% endfor %}
     </ul>
-</body>
+  </body>
 </html>

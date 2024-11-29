@@ -1,52 +1,59 @@
 <!-- tarif_ekle.html -->
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yemek Tarifleri</title>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{% url 'index' %}">Anasayfa</a></li>
+        <li><a href="{% url 'tarif_listesi' %}">Tarif Listesi</a></li>
+        <li><a href="{% url 'tarif_ekle' %}">Tarif Ekle</a></li>
+      </ul>
+    </nav>
+
     <h1>Yemek Tarifleri</h1>
     <ul>
-        {% for tarif in tarifler %}
-            <li>
-                <strong>{{ tarif.baslik }}</strong> - {{ tarif.kategori }}<br>
-                <em>{{ tarif.malzemeler|linebreaks }}</em><br>
-                <small>Oluşturan: {{ tarif.olusturan.username }}</small>
-            </li>
-        {% empty %}
-            <li>Henüz tarif eklenmemiş!</li>
-        {% endfor %}
+      {% for tarif in tarifler %}
+      <li>
+        <strong>{{ tarif.baslik }}</strong> - {{ tarif.kategori }}<br />
+        <em>{{ tarif.malzemeler|linebreaks }}</em><br />
+        <small>Oluşturan: {{ tarif.olusturan.username }}</small>
+      </li>
+      {% empty %}
+      <li>Henüz tarif eklenmemiş!</li>
+      {% endfor %}
     </ul>
-    
+
     <!-- FILTRE -->
     <form method="get">
-        <input type="text" name="malzeme" value="{{ arama_kelimesi }}" placeholder="Malzeme ara">
-        <button type="submit">Filtrele</button>
+      <input
+        type="text"
+        name="malzeme"
+        value="{{ arama_kelimesi }}"
+        placeholder="Malzeme ara"
+      />
+      <button type="submit">Filtrele</button>
     </form>
 
     <h2>Filtrelenmiş Tarifler</h2>
     <ul>
-        {% for tarif in tarifler %}
-            <li>{{ tarif.isim }} - {{ tarif.malzeme_detayi }}</li>
-        {% empty %}
-            <li>Hiçbir tarif bulunamadı.</li>
-        {% endfor %}
+      {% for tarif in tarifler %}
+      <li>{{ tarif.isim }} - {{ tarif.malzeme_detayi }}</li>
+      {% empty %}
+      <li>Hiçbir tarif bulunamadı.</li>
+      {% endfor %}
     </ul>
 
-    
     <h2>Yeni Tarif Ekle</h2>
     <!-- Formu ekliyoruz -->
     <form method="POST" action="{% url 'tarif_ekle' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Tarif Ekle</button>
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Tarif Ekle</button>
     </form>
-
-</body>
+  </body>
 </html>
-
-
 
 <!-- Formu doldurduktan sonra başarı mesajı eklemek isteyebilirsiniz -->

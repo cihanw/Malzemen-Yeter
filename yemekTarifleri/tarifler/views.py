@@ -3,6 +3,10 @@ from django.shortcuts import render, redirect
 from .models import Tarif
 from .forms import TarifForm
 
+def index(request):
+    return render(request, 'tarifler/index.html')  # 'index.html' dosyasını render et
+
+
 def tarif_listesi(request):
     tarifler = Tarif.objects.all()
     return render(request, 'tarifler/tarif_ekle.html', {'tarifler': tarifler})
