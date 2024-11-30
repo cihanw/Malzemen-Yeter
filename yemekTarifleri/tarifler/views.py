@@ -26,16 +26,24 @@ def tarif_listesi(request):
         'secili_malzemeler': malzeme_ids
     })
 
-
 def tarif_ekle(request):
     malzemeler = Malzeme.objects.all()
+    
     if request.method == 'POST':
         baslik = request.POST.get('baslik')
         kategori = request.POST.get('kategori')
-        secilen_malzemeler = request.POST.getlist('malzemeler')
-
-        tarif = Tarif.objects.create(baslik=baslik, kategori=kategori, olusturan=request.user)
-        tarif.malzemeler.set(secilen_malzemeler)
+        tarif = request.POST.get('tarif')
+        secilen_malzemeler = request.POST.getlist('malzemeler')  # Multiple malzemeler
+        
+        # Yeni tarif oluşturuluyor
+        tarif_obj = Tarif.objects.create(baslik=baslik, kategori=kategori, tarif=tarif, olusturan=request.user)
+        
+        # Seçilen malzemeleri tarif objesine ekliyoruz
+        for malzeme_id in secilen_malzemeler:
+            malzeme = Malzeme.objects.get(id=malzeme_id)  # Malzeme objesini al
+            tarif_obj.malzemeler.add(malzeme)  # ManyToMany ilişkilendirmesi yapılıyor
+        
+        tarif_obj.save()  # Tarifi kaydediyoruz
         return redirect('tarif_listesi')
 
     return render(request, 'tarifler/tarif_ekle.html', {'malzemeler': malzemeler})

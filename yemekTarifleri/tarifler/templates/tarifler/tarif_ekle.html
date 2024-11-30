@@ -61,11 +61,14 @@
         placeholder="Malzeme ara"
         oninput="filterMalzemeler()"
         autocomplete="off"
-        required
       />
       <div class="malzeme-container" id="malzeme-listesi">
         {% for malzeme in malzemeler %}
-        <div class="malzeme-item" data-id="{{ malzeme.id }}">
+        <div
+          class="malzeme-item"
+          data-id="{{ malzeme.id }}"
+          data-names="{{ malzeme.isim }}"
+        >
           {{ malzeme.isim }}
         </div>
         {% endfor %}
@@ -135,6 +138,11 @@
           const malzemeId = event.target.getAttribute("data-id");
           const malzemeIsim = event.target.textContent;
 
+          // Aynı malzeme bir kez seçilebilir, zaten seçiliyse işlem yapılmaz
+          if (isMalzemeAlreadySelected(malzemeIsim)) {
+            return;
+          }
+
           const selectedMalzemeDiv = document.createElement("div");
           selectedMalzemeDiv.classList.add("selected-malzeme");
           selectedMalzemeDiv.textContent = malzemeIsim;
@@ -145,8 +153,9 @@
           };
 
           selectedMalzemeDiv.addEventListener("click", function () {
-            selectedMalzeler.removeChild(selectedMalzemeDiv);
+            selectedMalzemeler.removeChild(selectedMalzemeDiv);
             updateSubmitButtonState();
+            malzemeListesi.style.display = "block"; // Listeyi tekrar aç
           });
 
           selectedMalzemeler.appendChild(selectedMalzemeDiv);
@@ -154,15 +163,25 @@
         }
       });
 
+      // Seçili malzeme kontrolü
+      function isMalzemeAlreadySelected(malzemeIsim) {
+        const selectedItems =
+          selectedMalzemeler.getElementsByClassName("selected-malzeme");
+        for (let item of selectedItems) {
+          if (item.textContent === malzemeIsim) {
+            return true; // Malzeme zaten seçili
+          }
+        }
+        return false;
+      }
+
       // Tarifin ve malzeme seçiminin kontrolü
       function updateSubmitButtonState() {
-        const selectedMalzemeCount = selectedMalzemeler.children.length;
         const tarifText = tarifInput.value.trim();
         const baslikText = baslikInput.value.trim();
         const kategoriText = kategoriInput.value.trim();
 
         if (
-          selectedMalzemeCount > 0 &&
           tarifText.length > 0 &&
           baslikText.length > 0 &&
           kategoriText.length > 0
