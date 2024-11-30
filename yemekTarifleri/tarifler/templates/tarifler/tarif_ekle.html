@@ -1,9 +1,39 @@
-<!-- tarif_ekle.html -->
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yemek Tarifleri</title>
+    <title>Yeni Tarif Ekle</title>
+    <style>
+      /* Dropdown malzeme listesi */
+      .malzeme-container {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        display: none; /* Başlangıçta gizli */
+      }
+
+      .malzeme-item {
+        padding: 5px;
+        cursor: pointer;
+      }
+
+      .malzeme-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .selected-malzemeler {
+        margin-top: 10px;
+      }
+
+      .selected-malzeme {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+      }
+    </style>
   </head>
   <body>
     <nav>
@@ -14,46 +44,139 @@
       </ul>
     </nav>
 
-    <h1>Yemek Tarifleri</h1>
-    <ul>
-      {% for tarif in tarifler %}
-      <li>
-        <strong>{{ tarif.baslik }}</strong> - {{ tarif.kategori }}<br />
-        <em>{{ tarif.malzemeler|linebreaks }}</em><br />
-        <small>Oluşturan: {{ tarif.olusturan.username }}</small>
-      </li>
-      {% empty %}
-      <li>Henüz tarif eklenmemiş!</li>
-      {% endfor %}
-    </ul>
+    <h1>Yeni Tarif Ekle</h1>
+    <form method="POST" action="{% url 'tarif_ekle' %}" id="tarif-form">
+      {% csrf_token %}
+      <label for="baslik">Tarif Başlığı:</label>
+      <input type="text" id="baslik" name="baslik" required /><br /><br />
 
-    <!-- FILTRE -->
-    <form method="get">
+      <label for="kategori">Kategori:</label>
+      <input type="text" id="kategori" name="kategori" required /><br /><br />
+
+      <!-- Malzeme seçimi -->
+      <label>Malzemeler:</label><br />
       <input
         type="text"
-        name="malzeme"
-        value="{{ arama_kelimesi }}"
+        id="malzeme-arama"
         placeholder="Malzeme ara"
+        oninput="filterMalzemeler()"
+        autocomplete="off"
+        required
       />
-      <button type="submit">Filtrele</button>
+      <div class="malzeme-container" id="malzeme-listesi">
+        {% for malzeme in malzemeler %}
+        <div class="malzeme-item" data-id="{{ malzeme.id }}">
+          {{ malzeme.isim }}
+        </div>
+        {% endfor %}
+      </div>
+      <br />
+
+      <div class="selected-malzemeler" id="selected-malzemeler"></div>
+      <br />
+
+      <!-- Tarif metni ekle -->
+      <label for="tarif">Tarif:</label><br />
+      <textarea
+        id="tarif"
+        name="tarif"
+        rows="5"
+        cols="40"
+        placeholder="Tarifinizi burada yazın..."
+        required
+      ></textarea>
+      <br /><br />
+
+      <button type="submit" id="submit-btn" disabled>Tarif Ekle</button>
     </form>
 
-    <h2>Filtrelenmiş Tarifler</h2>
-    <ul>
-      {% for tarif in tarifler %}
-      <li>{{ tarif.isim }} - {{ tarif.malzeme_detayi }}</li>
-      {% empty %}
-      <li>Hiçbir tarif bulunamadı.</li>
-      {% endfor %}
-    </ul>
+    <script>
+      // Malzeme listesine tıklama işlemi
+      const malzemeListesi = document.getElementById("malzeme-listesi");
+      const selectedMalzemeler = document.getElementById("selected-malzemeler");
+      const submitBtn = document.getElementById("submit-btn");
+      const tarifInput = document.getElementById("tarif");
+      const baslikInput = document.getElementById("baslik");
+      const kategoriInput = document.getElementById("kategori");
+      const malzemeAramaInput = document.getElementById("malzeme-arama");
 
-    <h2>Yeni Tarif Ekle</h2>
-    <!-- Formu ekliyoruz -->
-    <form method="POST" action="{% url 'tarif_ekle' %}">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Tarif Ekle</button>
-    </form>
+      document
+        .getElementById("malzeme-arama")
+        .addEventListener("focus", function () {
+          malzemeListesi.style.display = "block"; // Listeyi aç
+        });
+
+      document
+        .getElementById("malzeme-arama")
+        .addEventListener("blur", function () {
+          setTimeout(() => {
+            malzemeListesi.style.display = "none"; // Listeyi kapat
+          }, 200);
+        });
+
+      function filterMalzemeler() {
+        const searchTerm = malzemeAramaInput.value.toLowerCase();
+        const malzemeItems =
+          malzemeListesi.getElementsByClassName("malzeme-item");
+
+        Array.from(malzemeItems).forEach(function (item) {
+          const malzemeIsim = item.textContent.toLowerCase();
+          if (malzemeIsim.includes(searchTerm)) {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      }
+
+      // Malzeme seçme işlemi
+      malzemeListesi.addEventListener("click", function (event) {
+        if (event.target.classList.contains("malzeme-item")) {
+          const malzemeId = event.target.getAttribute("data-id");
+          const malzemeIsim = event.target.textContent;
+
+          const selectedMalzemeDiv = document.createElement("div");
+          selectedMalzemeDiv.classList.add("selected-malzeme");
+          selectedMalzemeDiv.textContent = malzemeIsim;
+
+          const malzemeData = {
+            id: malzemeId,
+            isim: malzemeIsim,
+          };
+
+          selectedMalzemeDiv.addEventListener("click", function () {
+            selectedMalzeler.removeChild(selectedMalzemeDiv);
+            updateSubmitButtonState();
+          });
+
+          selectedMalzemeler.appendChild(selectedMalzemeDiv);
+          updateSubmitButtonState();
+        }
+      });
+
+      // Tarifin ve malzeme seçiminin kontrolü
+      function updateSubmitButtonState() {
+        const selectedMalzemeCount = selectedMalzemeler.children.length;
+        const tarifText = tarifInput.value.trim();
+        const baslikText = baslikInput.value.trim();
+        const kategoriText = kategoriInput.value.trim();
+
+        if (
+          selectedMalzemeCount > 0 &&
+          tarifText.length > 0 &&
+          baslikText.length > 0 &&
+          kategoriText.length > 0
+        ) {
+          submitBtn.disabled = false; // Butonu etkinleştir
+        } else {
+          submitBtn.disabled = true; // Butonu devre dışı bırak
+        }
+      }
+
+      // Tarifin her değişikliğinde buton durumunu güncelle
+      tarifInput.addEventListener("input", updateSubmitButtonState);
+      baslikInput.addEventListener("input", updateSubmitButtonState);
+      kategoriInput.addEventListener("input", updateSubmitButtonState);
+    </script>
   </body>
 </html>
-
-<!-- Formu doldurduktan sonra başarı mesajı eklemek isteyebilirsiniz -->

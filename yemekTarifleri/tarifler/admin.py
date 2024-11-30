@@ -1,6 +1,9 @@
 # Register your models here.
 from django.contrib import admin
-from .models import Tarif, Yorum
+from .models import Tarif, Yorum, Malzeme
+
+
+admin.site.register(Malzeme)
 
 @admin.register(Tarif)
 class TarifAdmin(admin.ModelAdmin):

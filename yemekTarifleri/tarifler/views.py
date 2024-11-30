@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import render, redirect
-from .models import Tarif
+from .models import Tarif, Malzeme
 from .forms import TarifForm
 
 def index(request):
@@ -8,26 +8,34 @@ def index(request):
 
 
 def tarif_listesi(request):
-    tarifler = Tarif.objects.all()
-    return render(request, 'tarifler/tarif_ekle.html', {'tarifler': tarifler})
+    arama_kelimesi = request.GET.get('arama', '')
+    malzeme_ids = request.GET.getlist('malzemeler')
 
-def tarif_filtrele(request):
-    arama_kelimesi = request.GET.get('malzeme', '')
     tarifler = Tarif.objects.all()
-
     if arama_kelimesi:
-        tarifler = tarifler.filter(malzeme_detayi__icontains=arama_kelimesi)
+        tarifler = tarifler.filter(baslik__icontains=arama_kelimesi)
 
-    return render(request, 'tarifler/tarif_filtrele.html', {'tarifler': tarifler, 'arama_kelimesi': arama_kelimesi})
+    if malzeme_ids:
+        tarifler = tarifler.filter(malzemeler__id__in=malzeme_ids).distinct()
+
+    malzemeler = Malzeme.objects.all()
+    return render(request, 'tarifler/tarif_listesi.html', {
+        'tarifler': tarifler,
+        'malzemeler': malzemeler,
+        'arama_kelimesi': arama_kelimesi,
+        'secili_malzemeler': malzeme_ids
+    })
 
 
 def tarif_ekle(request):
+    malzemeler = Malzeme.objects.all()
     if request.method == 'POST':
-        form = TarifForm(request.POST, request.FILES)  # Kullanıcı dosya yüklerse FILES parametresini ekliyoruz
-        if form.is_valid():
-            form.save()  # Form geçerliyse kaydediyoruz
-            return redirect('tarif_listesi')  # Başarılı olursa tarif listesine yönlendiriyoruz
-    else:
-        form = TarifForm()  # Form ilk kez açılıyorsa boş bir form döndür
+        baslik = request.POST.get('baslik')
+        kategori = request.POST.get('kategori')
+        secilen_malzemeler = request.POST.getlist('malzemeler')
 
-    return render(request, 'tarifler/tarif_ekle.html', {'form': form})
+        tarif = Tarif.objects.create(baslik=baslik, kategori=kategori, olusturan=request.user)
+        tarif.malzemeler.set(secilen_malzemeler)
+        return redirect('tarif_listesi')
+
+    return render(request, 'tarifler/tarif_ekle.html', {'malzemeler': malzemeler})
