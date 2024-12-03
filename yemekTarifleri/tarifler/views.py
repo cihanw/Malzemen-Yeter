@@ -1,10 +1,11 @@
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tarif, Malzeme
 from .forms import TarifForm
 
-def index(request):
-    return render(request, 'tarifler/index.html')  # 'index.html' dosyasını render et
+def anasayfa(request):
+    tarifler = Tarif.objects.all()
+    return render(request, 'tarifler/anasayfa.html', {'tarifler': tarifler})  # 'anasayfa.html' dosyasını render et
 
 
 def tarif_listesi(request):
@@ -47,3 +48,7 @@ def tarif_ekle(request):
         return redirect('tarif_listesi')
 
     return render(request, 'tarifler/tarif_ekle.html', {'malzemeler': malzemeler})
+
+def tarif_detay(request, id):
+    tarif = get_object_or_404(Tarif, id=id)
+    return render(request, 'tarifler/tarif_detay.html', {'tarif': tarif})
