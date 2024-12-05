@@ -1,0 +1,171 @@
+/* Genel Sayfa Ayarları */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 120%;
+    height: 120%;
+    overflow: hidden;
+    font-family: Poppins, sans-serif;
+  }
+  
+  /* Her Adım (Step) Tam Ekran Olmalı */
+  #step1, #step2, #step3 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none; /* Başlangıçta adımlar gizli olacak */
+    background: white;
+  }
+  
+  /* Adımların İlkini Göster */
+  #step1 {
+    display: block;
+  }
+  
+  /* Görsel Arka Plan */
+  .Image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #EEEEEE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .Image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  /* İçerik Alanları */
+  .Frame226 {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  /* Adım Başlıkları */
+  .CreateAnAccount {
+    color: #333333;
+    font-size: 32px;
+    font-weight: 500;
+  }
+  
+  /* Input Alanları */
+  .TextField {
+    width: 80%;
+    max-width: 750px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .TextField input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    font-size: 16px;
+    color: #666666;
+    outline: none;
+  }
+  
+  .TextField2 {
+    width: 100%;
+    max-width: 750px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .TextField2 input {
+    width: 500%;
+    max-width: 750px;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    font-size: 16px;
+    color: #666666;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  
+  /* Stepper */
+  .Stepper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .Group3 {
+    width: 20px;
+    height: 20px;
+    background: #333;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .Group3 div {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  /* Button Stil */
+  .Button {
+    width: 80%;
+    max-width: 750px;
+    height: 64px;
+    margin: 20px auto;
+    opacity: 0.25;
+    background: #111111;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    pointer-events: none;
+  }
+  
+  .Button.enabled {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .SignUp {
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  
+  /* Linkler */
+  #login-link {
+    color: #111111;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
