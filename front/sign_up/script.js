@@ -77,6 +77,6 @@ document.getElementById('email').addEventListener('input', function () {
   function goToHomePage() {
     alert("Account created successfully!");
     // Ana sayfaya yönlendir
-    window.location.href = 'main_page.html';  // Bu URL'yi ihtiyacınıza göre değiştirebilirsiniz
+    window.location.href = '../main_page/main_page.html';
   }
   
