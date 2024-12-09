@@ -8,15 +8,14 @@ class Malzeme(models.Model):
     def __str__(self):
         return self.isim
     
-
 class Tarif(models.Model):
     baslik = models.CharField(max_length=100)
     kategori = models.CharField(max_length=50)
-    malzemeler = models.TextField()
+    malzemeler = models.ManyToManyField(Malzeme, related_name='tarifler')  # ManyToMany veya ForeignKey ile ilişkilendirme
     tarif = models.TextField()
     resim = models.ImageField(upload_to='tarif_resimleri/', null=True, blank=True)
     olusturma_tarihi = models.DateTimeField(auto_now_add=True)
-    olusturan = models.CharField(max_length=50) # models.ForeignKey(User, on_delete=models.CASCADE)
+    olusturan_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.baslik

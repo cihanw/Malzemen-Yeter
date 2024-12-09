@@ -2,9 +2,10 @@
 from django.contrib import admin
 from .models import Tarif, Yorum, Malzeme
 
-
+admin.site.register(Tarif)
 admin.site.register(Malzeme)
 
+"""
 @admin.register(Tarif)
 class TarifAdmin(admin.ModelAdmin):
     list_display = ('baslik', 'kategori', 'olusturan', 'olusturma_tarihi')
@@ -15,3 +16,4 @@ class YorumAdmin(admin.ModelAdmin):
     list_display = ('tarif', 'yazar', 'olusturma_tarihi')
     search_fields = ('tarif__baslik', 'yazar__username')
 
+"""
