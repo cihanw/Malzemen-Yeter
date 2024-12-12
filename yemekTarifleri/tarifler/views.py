@@ -3,6 +3,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tarif, Malzeme
 from .forms import TarifForm, MalzemeFiltreleForm
 from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 def main_page(request):
     tarifler = Tarif.objects.all()
@@ -32,10 +36,15 @@ def tarif_arama(request):
     # Arama kelimesini ve filtrelenmiş tarifleri template'e gönder
     return render(request, 'recipes.html', {'tarifler': tarifler, 'search_query': search_query})
 
+@login_required(login_url='main_page')
 def tarif_ekle(request):
     malzemeler = Malzeme.objects.all()
     
     if request.method == 'POST':
+        if Tarif.olusturan_id != User:
+            
+            return redirect('main_page')
+        
         baslik = request.POST.get('baslik')
         kategori = request.POST.get('kategori')
         tarif = request.POST.get('tarif')
@@ -130,4 +139,46 @@ def tarif_arama_deneme(request):
         tarifler = filtered_tarifler
 
     return render(request, 'deneme_filtre.html', {'form': form, 'tarifler': tarifler})
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password != password2:
+            messages.error(request, "Şifreler eşleşmiyor.")
+            return redirect('register')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Bu kullanıcı adı zaten alınmış.")
+            return redirect('register')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Bu e-posta adresi zaten kullanılıyor.")
+            return redirect('register')
+
+        # Kullanıcıyı oluştur
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        messages.success(request, "Üyelik başarıyla oluşturuldu.")
+        return redirect('login')
+
+    return render(request, 'sign_folder/register.html')
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Giriş başarılı!")
+            return redirect('home')  # Ana sayfaya yönlendirme
+        else:
+            messages.error(request, "Kullanıcı adı veya şifre hatalı.")
+
+    return render(request, 'sign_folder/login.html')
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Account</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="r_styles.css">
 </head>
 <body>
   <!-- Step 1: Email -->
@@ -14,7 +14,7 @@
         <div class="CreateAnAccount">Create an account</div>
         <div class="HaveAnAccountLogin">
           <span>Already have an account?</span>
-          <span id="login-link">Log in</span>
+          <span id="login-link"><a href= "{% url 'login' %}">Log in</a></span>
         </div>
       </div>
       <div class="Frame224">
@@ -67,6 +67,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="r_script.js"></script>
 </body>
 </html>

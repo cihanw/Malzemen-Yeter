@@ -4,11 +4,24 @@
     <!-- tarif ekleme butonu(gecici) -->
     <u1><a href= "{% url 'tarif_ekle' %}">
         <div class="Header" style="width: 840px; height: 289px; left: 300px; top: 190px; position: absolute">
-          <div class="ADD" style="left: 191px; top: -50px; position: absolute; text-align: center; color: black; font-size: 64px; font-family: Inter; font-weight: 600; word-wrap: break-word">AAAAAAAAADD</div>
-          
+          <div class="Button" onclick="warn()" style="left: 191px; top: -50px; position: absolute; text-align: center; color: black; font-size: 64px; font-family: Inter; font-weight: 600; word-wrap: break-word">AAAAAAAAADD</div>
+            <!--<button onclick="warn()">
+           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 
+               
+            </button>-->
         </div>
       </a>
     </u1>
+
+    <script>
+    function warn() {
+    
+        if (Tarif.olusturan_id != User)
+        {
+            alert("Lütfen log-in.");
+        } 
+    }
+  </script>
     
     <!-- orijinal -->
     <div class="Header" style="width: 840px; height: 289px; left: 300px; top: 190px; position: absolute">
