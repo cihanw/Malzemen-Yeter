@@ -7,7 +7,7 @@ urlpatterns = [
     path('', views.main_page, name='main_page'),  # Ana sayfa
 
     path('sign-up/', views.register, name='register'),  # Sign Up
-    path('sign-in/', views.login, name='login'),  # Sign In
+    path('sign-in/', views.sign_in, name='login'),  # Sign In
 
     path('recipes/', views.recipes, name='recipes'),  # Recipes bağlantısı
     path('contact/', views.contact, name='contact'),  # Contact bağlantısı

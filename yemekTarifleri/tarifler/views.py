@@ -90,9 +90,6 @@ def tarif_detay(request, id):
 def deneme_filtre(request):
     return render(request, 'deneme_filtre.html')
 """
-    
-from django.shortcuts import render
-from .models import Tarif, Malzeme
 
 """
 def tarif_arama_deneme(request):
@@ -142,10 +139,10 @@ def tarif_arama_deneme(request):
 
 def register(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['email']
         email = request.POST['email']
         password = request.POST['password']
-        password2 = request.POST['password2']
+        password2 = request.POST['confirmPassword']
 
         if password != password2:
             messages.error(request, "Şifreler eşleşmiyor.")
@@ -167,7 +164,7 @@ def register(request):
 
     return render(request, 'sign_folder/register.html')
 
-def login(request):
+def sign_in(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -176,7 +173,9 @@ def login(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Giriş başarılı!")
-            return redirect('home')  # Ana sayfaya yönlendirme
+            if request.user.is_authenticated:
+                print(f"Kullanıcı başarıyla giriş yaptı.")
+            return redirect('main_page')  # Ana sayfaya yönlendirme
         else:
             messages.error(request, "Kullanıcı adı veya şifre hatalı.")
 

@@ -63,7 +63,8 @@ document.getElementById('email').addEventListener('input', function () {
   
     if (password === confirmPassword) {
       // Şifreler eşleşirse bir sonraki sayfaya yönlendir
-      goToHomePage();
+      window.location.href = "{% url 'login' %}";
+      //goToHomePage();
     } else {
       // Şifreler eşleşmezse uyarı ver
       alert("Passwords do not match! Please try again.");
@@ -77,6 +78,6 @@ document.getElementById('email').addEventListener('input', function () {
   function goToHomePage() {
     alert("Account created successfully!");
     // Ana sayfaya yönlendir
-    window.location.href = '../main_page/main_page.html';
+    window.location.href = "{% url 'login' %}";
   }
   
