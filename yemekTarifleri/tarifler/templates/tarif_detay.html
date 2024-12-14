@@ -1,19 +1,19 @@
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ tarif.baslik }}</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{ tarif.baslik }}</h1>
     <h3>Malzemeler:</h3>
-    
+
     {% for malzeme in tarif.malzemeler.all %}
-        <li>{{ malzeme.isim }}</li>
-    {% endfor %}    
-    
+    <li>{{ malzeme.isim }}</li>
+    {% endfor %}
+
     <h3>Tarif:</h3>
     <p>{{ tarif.tarif }}</p>
     <a href="{% url 'main_page' %}">Geri dön</a>
-</body>
+  </body>
 </html>

@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
 
 def main_page(request):
     tarifler = Tarif.objects.all()
@@ -144,24 +145,30 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirmPassword')
 
+        # Şifre eşleşme kontrolü
         if password != confirm_password:
             messages.error(request, "Şifreler eşleşmiyor.")
             return redirect('register')
 
+        # Kullanıcı adı kontrolü
         if User.objects.filter(username=username).exists():
             messages.error(request, "Bu kullanıcı adı zaten alınmış.")
             return redirect('register')
 
+        # E-posta kontrolü
         if User.objects.filter(email=email).exists():
             messages.error(request, "Bu e-posta adresi zaten kullanılıyor.")
             return redirect('register')
 
+        # Yeni kullanıcı oluştur ve kaydet
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
-        messages.success(request, "Üyelik başarıyla oluşturuldu. Giriş yapabilirsiniz.")
+
+        # Başarılı olduğunda giriş sayfasına yönlendir
+        messages.success(request, "Hesabınız başarıyla oluşturuldu. Giriş yapabilirsiniz.")
         return redirect('login')
 
-    return render(request, 'sign_folder/register.html')
+    return render(request, 'register.html')
 
 def sign_in(request):
     if request.method == 'POST':
@@ -176,4 +183,4 @@ def sign_in(request):
         else:
             messages.error(request, "Kullanıcı adı veya şifre hatalı.")
 
-    return render(request, 'sign_folder/login.html')
+    return render(request, 'login.html')

@@ -122,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static",]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -134,4 +134,14 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'  # Varsayılan: Veritabanı
 SESSION_COOKIE_NAME = 'sessionid'  # Varsayılan
 SESSION_COOKIE_SECURE = True  # Üretim ortamında HTTPS için önerilir
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'email@example.com'
+EMAIL_HOST_PASSWORD = 'sifre'
+
+LOGIN_REDIRECT_URL = '/profile/'  # Kullanıcı profil sayfasına yönlendirme
+LOGOUT_REDIRECT_URL = '/'
 
