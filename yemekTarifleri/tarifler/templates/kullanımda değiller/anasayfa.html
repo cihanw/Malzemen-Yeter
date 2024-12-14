@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarif Listesi</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+        <!-- <li><a href="{% url 'tarif_listesi' %}">Tarif Listesi</a></li> -->
+        <li><a href="{% url 'tarif_ekle' %}">Tarif Ekle</a></li>
+      </ul>
+    </nav>
+
+    <h1>Tarifler</h1>
+    <form method="GET">
+      <label for="arama">Tarif Ara:</label>
+      <input
+        type="text"
+        id="arama"
+        name="arama"
+        value="{{ arama_kelimesi }}"
+        placeholder="Tarif adı ara"
+      />
+      <br /><br />
+
+      <fieldset>
+        <legend>Malzemelerle Filtrele:</legend>
+        {% for malzeme in malzeme_listesi %}
+          <label>
+            <input type="checkbox" name="malzemeler" value="{{ malzeme.id }}"
+            {% if malzeme.id|stringformat:"s" in secili_malzemeler %}checked{% endif %}>
+            {{ malzeme.isim }}
+          </label><br>
+        {% endfor %}
+      </fieldset>
+
+    <!-- <h2>Filtrelenmiş Tarifler</h2> -->
+    <ul>
+      {% for tarif in tarifler %}
+      <li><a href="{% url 'tarif_detay' tarif.id %}">  {{ tarif.baslik }} - {{ tarif.kategori }} </a></li> 
+      {% empty %}
+      <li>Hiçbir tarif bulunamadı.</li>
+      {% endfor %}
+    </ul> 
+  </body>
+</html>

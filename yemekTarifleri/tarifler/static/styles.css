@@ -1,0 +1,61 @@
+/* Ensure links take up space for hover effect */
+.NavigationLinks a, .YourProfile a {
+    display: inline-block;
+    padding: 10px 20px; /* Added padding for clickable area */
+    text-decoration: none;
+    color: black; /* Default text color */
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 500;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for navigation links and profile link */
+.NavigationLinks a:hover, .YourProfile a:hover {
+    color: #FF7426; /* Change text color on hover */
+    transform: scale(1.1); /* Slightly scale up the link */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a soft shadow to the link */
+    cursor: pointer; /* Change cursor to indicate the item is clickable */
+}
+
+/* Set the initial height of the categories section to hide it */
+#categories-section {
+    overflow: hidden;  /* Hide content that overflows */
+    max-height: 342px; /* Default height */
+    transition: max-height 0.5s ease-out; /* Smooth transition when expanding */
+}
+
+/* When expanded, we increase the max-height to show all content */
+#categories-section.expanded {
+    max-height: 800px; /* You can adjust this value depending on how much content you have */
+}
+
+/* Optional: Add hover effect for the button */
+#view-all-btn:hover {
+    cursor: pointer;
+    background-color: #D4F0F7;  /* Slight change on hover */
+}
+
+/* Link style */
+.link-effect {
+    display: block; /* Ensures that the link takes up the whole space */
+    text-decoration: none; /* Remove default underline */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for smooth effect */
+}
+
+/* Group hover effect */
+.link-effect:hover {
+    transform: scale(1.05); /* Slightly increase size on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add a shadow effect on hover */
+}
+
+/* Optionally, you can add a color change */
+.link-effect:hover .TheBestEasyOnePotChickenAndRice {
+    color: #007bff; /* Change text color on hover */
+}
+
+/* Optional: to make sure the image inside scales as well */
+.link-effect:hover .MaskGroup img {
+    transform: scale(1.05); /* Slightly scale the image */
+}
+

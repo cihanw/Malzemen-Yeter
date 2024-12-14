@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Giriş Yap</title>
+  </head>
+  <body>
+    <h1>Giriş Yap</h1>
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <label for="username">Kullanıcı Adı:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Şifre:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Giriş Yap</button>
+    </form>
+
+    <div style="margin-top: 20px">
+      <span>Hesabın yok mu?</span>
+      <a href="{% url 'register' %}" style="margin-left: 10px">
+        <button type="button">Hesap Oluştur</button>
+      </a>
+    </div>
+  </body>
+</html>

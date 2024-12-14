@@ -1,0 +1,34 @@
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+DROP DATABASE IF EXISTS `yemek_tarifleri_db`;
+CREATE DATABASE yemek_tarifleri_db;
+
+DROP TABLE IF EXISTS `tarifler_tarif`;
+CREATE TABLE tarifler_tarif (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    baslik VARCHAR(100),
+    kategori VARCHAR(50),
+    malzemeler TEXT,
+    yapilis TEXT,
+    resim VARCHAR(255),  -- resim yolu saklanacak, genellikle varchar tipinde
+    olusturma_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP,
+    olusturan_id VARCHAR(50), -- INT,  -- Bu, 'User' modeline ait bir yabancı anahtar
+    FOREIGN KEY (olusturan_id) REFERENCES user(id)  -- 'user' tablosuna referans veriyoruz (dikkat: 'user' tablosu zaten var olmalı)
+);
+
+#INSERT INTO tarifler_tarif (baslik, kategori, malzemeler, yapilis, resim, olusturan)
+#VALUES ('Tarif Başlığı', 'Kategori Adı', 'Malzeme 1, Malzeme 2, Malzeme 3', 'Tarifin yapılışı...', 'resim.jpg', 1);
+INSERT INTO tarifler_tarif (baslik, kategori, malzemeler, yapilis, resim, olusturan_id)
+VALUES ('Sebzeli Makarna', 'Yemek', 'Makarna, Domates, Kabak, Patlıcan, Zeytinyağı', 'Makarnayı haşlayın, sebzeleri doğrayıp kavurun...', 'sebzeli_makarna.jpg', 1);
+
+
+DROP TABLE IF EXISTS `tarifler_yorum`;
+CREATE TABLE tarifler_yorum (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tarif_id INT,  -- Yorumun ait olduğu tarifin ID'si (ForeignKey)
+    yazar_id INT,  -- Yorumun yazarı olan kullanıcının ID'si (ForeignKey)
+    icerik TEXT,  -- Yorumun içeriği
+    olusturma_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Yorumun oluşturulma tarihi
+    FOREIGN KEY (tarif_id) REFERENCES tarifler_tarif(id),  -- 'tarifler_tarif' tablosuna referans veriyoruz
+    FOREIGN KEY (yazar_id) REFERENCES user(id)  -- 'user' tablosuna referans veriyoruz
+);
+

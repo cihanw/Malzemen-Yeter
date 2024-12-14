@@ -11,3 +11,7 @@ class TarifForm(forms.ModelForm):
     class Meta:
         model = Tarif
         fields = ['baslik', 'kategori', 'malzemeler']
+
+
+class MalzemeFiltreleForm(forms.Form):
+    malzemeler = forms.ModelMultipleChoiceField(queryset=Malzeme.objects.all(), widget=forms.CheckboxSelectMultiple)
