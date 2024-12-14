@@ -4,6 +4,10 @@ from .views import tarif_listesi
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 
 urlpatterns = [
@@ -31,6 +35,12 @@ urlpatterns = [
 
     #path('deneme_filtre/', views.deneme_filtre, name='deneme_filtre'),
     path('tarif_arama_deneme/', views.tarif_arama_deneme, name='tarif_arama_deneme'),
+
+    
     
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

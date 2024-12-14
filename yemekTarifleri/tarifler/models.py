@@ -15,7 +15,7 @@ class Tarif(models.Model):
     tarif = models.TextField()
     resim = models.ImageField(upload_to='tarif_resimleri/', null=True, blank=True)
     olusturma_tarihi = models.DateTimeField(auto_now_add=True)
-    olusturan_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    olusturan = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.baslik
