@@ -1,9 +1,10 @@
-<form method="POST">
+<form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
     <label for="username">Kullanıcı Adı:</label>
     <input type="text" id="username" name="username" required>
+    
     <label for="password">Şifre:</label>
     <input type="password" id="password" name="password" required>
     
-    <button type="submit"><a href = "{% url 'main_page' %}" >Giriş Yap</a></button>
+    <button type="submit"><a href = "{% url 'main_page' %}">Gir</a></button>
 </form>

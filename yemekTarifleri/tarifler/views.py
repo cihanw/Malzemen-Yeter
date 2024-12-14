@@ -139,12 +139,12 @@ def tarif_arama_deneme(request):
 
 def register(request):
     if request.method == 'POST':
-        username = request.POST['email']
-        email = request.POST['email']
-        password = request.POST['password']
-        password2 = request.POST['confirmPassword']
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirmPassword')
 
-        if password != password2:
+        if password != confirm_password:
             messages.error(request, "Şifreler eşleşmiyor.")
             return redirect('register')
 
@@ -156,28 +156,24 @@ def register(request):
             messages.error(request, "Bu e-posta adresi zaten kullanılıyor.")
             return redirect('register')
 
-        # Kullanıcıyı oluştur
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
-        messages.success(request, "Üyelik başarıyla oluşturuldu.")
+        messages.success(request, "Üyelik başarıyla oluşturuldu. Giriş yapabilirsiniz.")
         return redirect('login')
 
     return render(request, 'sign_folder/register.html')
 
 def sign_in(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             messages.success(request, "Giriş başarılı!")
-            if request.user.is_authenticated:
-                print(f"Kullanıcı başarıyla giriş yaptı.")
             return redirect('main_page')  # Ana sayfaya yönlendirme
         else:
             messages.error(request, "Kullanıcı adı veya şifre hatalı.")
 
     return render(request, 'sign_folder/login.html')
-

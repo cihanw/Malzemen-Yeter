@@ -1,76 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account</title>
-  <link rel="stylesheet" href="{% static 'r_styles.css' %}">
-</head>
-<body>
-  <!-- Step 1: Email -->
-  <div id="step1">
-    <div class="Frame226">
-      <div class="Frame8">
-        <div class="CreateAnAccount">Create an account</div>
-        <div class="HaveAnAccountLogin">
-          <span>Already have an account?</span>
-          <span id="login-link"><a href= "{% url 'login' %}">Log in</a></span>
-        </div>
-      </div>
-      <div class="Frame224">
-        <div class="Stepper">
-          <div class="Group3">
-            <div>1</div>
-          </div>
-          <div>Enter your email address</div>
-        </div>
-        <div class="TextField2">
-          <input type="email" id="email" placeholder="Enter your email address">
-        </div>
-        <div class="Button" id="nextButton" onclick="goToNextStep()">
-          <div class="SignUp">Next</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 2: Personal Info -->
-  <div id="step2">
-    <div class="Frame226">
-      <div class="Frame8">
-        <div class="CreateAnAccount">Provide your basic info</div>
-      </div>
-      <div class="TextField">
-        <input type="text" id="firstName" placeholder="First Name">
-        <input type="text" id="lastName" placeholder="Last Name">
-        <input type="date" id="dob" placeholder="Date of Birth">
-      </div>
-      <div class="Button" id="nextButtonStep2" onclick="goToPasswordStep()">
-        <div class="SignUp">Next</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 3: Create Password -->
-  <div id="step3">
-    <div class="Frame226">
-      <div class="Frame8">
-        <div class="CreateAnAccount">Create your password</div>
-      </div>
-      <div class="TextField">
-        <input type="password" id="password" placeholder="Enter your password">
-        <input type="password" id="confirmPassword" placeholder="Confirm your password">
-      </div>
-      <div class="Button" id="createAccountButton" onclick="checkPasswordsMatch()">
-        <div class="SignUp">Create Account</div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const loginUrl = "{% url 'login' %}";
-  </script>
-  <script src="{% static 'js/r2_script.js' %}"></script>
-</body>
-</html>
+<form method="POST" action="{% url 'register' %}">
+  {% csrf_token %}
+  <label for="username">Kullanıcı Adı:</label>
+  <input type="text" id="username" name="username" required>
+  
+  <label for="email">E-posta:</label>
+  <input type="email" id="email" name="email" required>
+  
+  <label for="password">Şifre:</label>
+  <input type="password" id="password" name="password" required>
+  
+  <label for="confirmPassword">Şifre (Tekrar):</label>
+  <input type="password" id="confirmPassword" name="confirmPassword" required>
+  
+  <button type="submit"><a href = "{% url 'login' %}">Olustur</a>
+</form>

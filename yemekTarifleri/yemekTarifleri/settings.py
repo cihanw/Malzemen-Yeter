@@ -130,3 +130,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'  # Varsayılan: Veritabanı
+SESSION_COOKIE_NAME = 'sessionid'  # Varsayılan
+SESSION_COOKIE_SECURE = True  # Üretim ortamında HTTPS için önerilir
+
