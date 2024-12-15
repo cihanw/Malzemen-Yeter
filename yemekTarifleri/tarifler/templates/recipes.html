@@ -16,7 +16,7 @@
 
   <!-- tarif ekleme butonu(gecici) -->
   <u1
-    ><a href="{% url 'tarif_ekle' %}">
+    >
       <div
         class="Header"
         style="
@@ -42,14 +42,19 @@
             word-wrap: break-word;
           "
         >
-          ADD Your Recipe Here
+        {% if user.is_authenticated %}
+        <a href="{% url 'tarif_ekle' %}">ADD Your Recipe Here</a>
+        {% else %}
+        <a href="{% url 'recipes' %}"><a href="{% url 'tarif_arama_deneme' %}">ADD Your Recipe Here</a></a>
+        {% endif %}
+          
         </div>
         <!--<button onclick="warn()">
            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 
                
             </button>-->
       </div>
-    </a>
+    
   </u1>
 
   <script>
@@ -517,7 +522,7 @@
         "
       >
         {% if user.is_authenticated %}
-        <a href="{% url 'your_profile' %}">Your Profile</a>
+        <a href="{% url 'your_profile' %}"><a href="{% url 'favoriler' %}">Your Profile</a></a>
         {% else %}
         <a href="{% url 'login' %}">Sign In</a>
         {% endif %}

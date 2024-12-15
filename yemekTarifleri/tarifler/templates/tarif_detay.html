@@ -12,7 +12,7 @@
     {% else %}
       <p>Görsel mevcut değil</p>
     {% endif %}
-    
+
     <h3>Malzemeler:</h3>
 
     {% for malzeme in tarif.malzemeler.all %}
@@ -25,6 +25,16 @@
     
     
     <h1>Creator: {{ tarif.olusturan }}</h1>
+
+    {% if tarif in request.user.favori_tarifler.all %}
+      <!-- Eğer tarif favorilerdeyse, favorilerden çıkar butonu -->
+      <a href="{% url 'favori_cikar' tarif.id %}">Favorilerden Çıkar</a>
+    {% else %}
+      <!-- Eğer tarif favorilerde değilse, favorilere ekle butonu -->
+      <a href="{% url 'favori_ekle' tarif.id %}">Favorilere Ekle</a>
+    {% endif %}
+    
+    <h1></h1>
 
     <a href="{% url 'recipes' %}"><a href="{% url 'tarif_arama_deneme' %}">Geri dön</a></a>
   </body>

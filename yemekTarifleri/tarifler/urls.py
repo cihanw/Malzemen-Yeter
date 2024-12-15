@@ -36,6 +36,10 @@ urlpatterns = [
     #path('deneme_filtre/', views.deneme_filtre, name='deneme_filtre'),
     path('tarif_arama_deneme/', views.tarif_arama_deneme, name='tarif_arama_deneme'),
 
+    path('favori-ekle/<int:tarif_id>/', views.favori_ekle, name='favori_ekle'),
+    path('favori-cikar/<int:tarif_id>/', views.favori_cikar, name='favori_cikar'),
+    path('favoriler', views.favoriler, name='favoriler'),
+
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

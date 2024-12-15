@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Tarif, Malzeme
+from .models import Tarif, Malzeme, FavoriTarif
 from .forms import TarifForm, MalzemeFiltreleForm
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -195,3 +195,46 @@ def sign_in(request):
             messages.error(request, "Kullanıcı adı veya şifre hatalı.")
 
     return render(request, 'login.html')
+
+
+@login_required
+def favori_ekle(request, tarif_id):
+    try:
+        tarif = Tarif.objects.get(id=tarif_id)
+        # Kullanıcının favori tariflerini kontrol et
+        if not FavoriTarif.objects.filter(user=request.user, tarif=tarif).exists():
+            # Favoriye ekle
+            FavoriTarif.objects.create(user=request.user, tarif=tarif)
+            messages.success(request, f"{tarif.baslik} favorilerinize eklendi!")
+        else:
+            messages.info(request, f"{tarif.baslik} zaten favorilerinizde.")
+    except Tarif.DoesNotExist:
+        messages.error(request, "Tarif bulunamadı.")
+    
+    return redirect('recipes')  # Favoriye ekleme işlemi sonrası tarifler sayfasına dön
+
+@login_required
+def favori_cikar(request, tarif_id):
+    try:
+        tarif = Tarif.objects.get(id=tarif_id)
+        # Kullanıcının favorilerinden çıkar
+        favori_tarif = FavoriTarif.objects.filter(user=request.user, tarif=tarif).first()
+        if favori_tarif:
+            favori_tarif.delete()
+            messages.success(request, f"{tarif.baslik} favorilerinizden çıkarıldı.")
+        else:
+            messages.info(request, f"{tarif.baslik} favorilerinizde değil.")
+    except Tarif.DoesNotExist:
+        messages.error(request, "Tarif bulunamadı.")
+    
+    return redirect('your_profile')  # Favoriden çıkarma işlemi sonrası tarifler sayfasına dön
+
+@login_required
+def favoriler(request):
+    # Kullanıcının favori tariflerini al
+    favori_tarifler = FavoriTarif.objects.filter(user=request.user).select_related('tarif')
+
+    # favori_tarifler queryset'ini tarif objelerine dönüştür
+    tarif_listesi = [favori.tarif for favori in favori_tarifler]
+
+    return render(request, 'your_profile.html', {'favori_tarifler': tarif_listesi})
