@@ -31,18 +31,18 @@
           class="Button"
           onclick="warn()"
           style="
-            left: 191px;
+            left: 205px;
             top: -50px;
             position: absolute;
             text-align: center;
             color: black;
-            font-size: 64px;
+            font-size: 40px;
             font-family: Inter;
             font-weight: 600;
             word-wrap: break-word;
           "
         >
-          AAAAAAAAADD
+          ADD Your Recipe Here
         </div>
         <!--<button onclick="warn()">
            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 
@@ -75,7 +75,7 @@
       class="GetYourRecipe"
       style="
         left: 191px;
-        top: 0px;
+        top: 20px;
         position: absolute;
         text-align: center;
         color: black;
@@ -96,15 +96,14 @@
         position: absolute;
         text-align: center;
         color: rgba(0, 0, 0, 0.6);
-        font-size: 16px;
+        font-size: 24px;
         font-family: Inter;
         font-weight: 400;
         line-height: 28px;
         word-wrap: break-word;
       "
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore
+      The recipe you are looking for is one click away from you..
     </div>
 
     <form method="get" action="{% url 'tarif_arama' %}">
@@ -147,8 +146,10 @@
             id="arama"
             name="search_query"
             value="{{ search_query }}"
+            
           />
         </div>
+        
         <div
           class="Rectangle3"
           style="
@@ -158,7 +159,7 @@
             border-radius: 25px;
             background-color: #007bff;
             position: relative;
-          "
+          "    
         >
           <button
             class="Search"
@@ -175,9 +176,10 @@
               border-radius: 25px;
             "
           >
-            Search
+          Search
           </button>
         </div>
+      
       </div>
     </form>
   </div>
@@ -212,31 +214,30 @@
           position: absolute;
         "
       >
-        <div
-          class="Rectangle11"
-          style="
-            width: 290px;
-            height: 200px;
-            left: 0px;
-            top: 0px;
-            position: absolute;
-            background: #c4c4c4;
-            border-radius: 20px;
-          "
-        ></div>
-        <img
-          class="Image26"
-          style="
-            width: 290px;
-            height: 291.2px;
-            left: 0px;
-            top: -20px;
-            position: absolute;
-            border-radius: 20px;
-          "
-          src="https://via.placeholder.com/290x291"
-        />
+        
+        
       </div>
+
+      <div
+        class="malzemeFiltre"
+        style="
+          width: 290px;
+          height: 200px;
+          left: 1200px;
+          top: 0px;
+          position: absolute;
+        "
+      >
+        
+      <form method="get">
+          {{ form.as_p }}
+          <button type="submit">Filtrele</button>
+      </form>  
+
+      </div>
+
+      
+
       <div
         class="CrochetProjectsForNoodleLovers"
         style="
@@ -270,234 +271,10 @@
         </div>
       </div>
     </div>
-    <div
-      class="Group906"
-      style="
-        width: 840px;
-        height: 200px;
-        left: 0px;
-        top: 232px;
-        position: absolute;
-      "
-    >
-      <div
-        class="MaskGroup"
-        style="
-          width: 290px;
-          height: 200px;
-          left: 0px;
-          top: 0px;
-          position: absolute;
-        "
-      >
-        <div
-          class="Rectangle11"
-          style="
-            width: 290px;
-            height: 200px;
-            left: 0px;
-            top: 0px;
-            position: absolute;
-            background: #c4c4c4;
-            border-radius: 20px;
-          "
-        ></div>
-        <img
-          class="Image26"
-          style="
-            width: 290px;
-            height: 291.2px;
-            left: 0px;
-            top: -20px;
-            position: absolute;
-            border-radius: 20px;
-          "
-          src="https://via.placeholder.com/290x291"
-        />
-      </div>
-      <div
-        class="VegetarianRecipesToEatThisMonth"
-        style="
-          left: 330px;
-          top: 13px;
-          position: absolute;
-          color: black;
-          font-size: 24px;
-          font-family: Inter;
-          font-weight: 600;
-          word-wrap: break-word;
-        "
-      >
-        10 Vegetarian Recipes To Eat This Month
-      </div>
-      <div
-        class="LoremIpsumDolorSitAmetConsectetuipisicingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliqutEnim"
-        style="
-          width: 510px;
-          left: 330px;
-          top: 58px;
-          position: absolute;
-          color: rgba(0, 0, 0, 0.6);
-          font-size: 16px;
-          font-family: Inter;
-          font-weight: 400;
-          line-height: 28px;
-          word-wrap: break-word;
-        "
-      >
-        Lorem ipsum dolor sit amet, consectetuipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqut enim
-      </div>
-    </div>
-    <div
-      class="Group908"
-      style="
-        width: 840px;
-        height: 200px;
-        left: 0px;
-        top: 461px;
-        position: absolute;
-      "
-    >
-      <div
-        class="MaskGroup"
-        style="
-          width: 290px;
-          height: 200px;
-          left: 0px;
-          top: 0px;
-          position: absolute;
-        "
-      >
-        <div
-          class="Rectangle11"
-          style="
-            width: 290px;
-            height: 200px;
-            left: 0px;
-            top: 0px;
-            position: absolute;
-            background: #c4c4c4;
-            border-radius: 20px;
-          "
-        ></div>
-        <img
-          class="Image26"
-          style="
-            width: 290px;
-            height: 291.2px;
-            left: 0px;
-            top: -20px;
-            position: absolute;
-            border-radius: 20px;
-          "
-          src="https://via.placeholder.com/290x291"
-        />
-      </div>
-      <div
-        class="SimpleDeliciousVegetarianLasagna"
-        style="
-          left: 330px;
-          top: 13px;
-          position: absolute;
-          color: black;
-          font-size: 24px;
-          font-family: Inter;
-          font-weight: 600;
-          word-wrap: break-word;
-        "
-      >
-        Simple & Delicious Vegetarian Lasagna
-      </div>
-      <div
-        class="LoremIpsumDolorSitAmetConsectetuipisicingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliqutEnim"
-        style="
-          width: 510px;
-          left: 330px;
-          top: 58px;
-          position: absolute;
-          color: rgba(0, 0, 0, 0.6);
-          font-size: 16px;
-          font-family: Inter;
-          font-weight: 400;
-          line-height: 28px;
-          word-wrap: break-word;
-        "
-      >
-        Lorem ipsum dolor sit amet, consectetuipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqut enim
-      </div>
-    </div>
-    <div
-      class="Group909"
-      style="
-        width: 840px;
-        height: 200px;
-        left: 0px;
-        top: 693px;
-        position: absolute;
-      "
-    >
-      <div
-        class="MaskGroup"
-        style="
-          width: 290px;
-          height: 200px;
-          left: 0px;
-          top: 0px;
-          position: absolute;
-        "
-      >
-        <div
-          class="Rectangle11"
-          style="
-            width: 290px;
-            height: 200px;
-            left: 0px;
-            top: 0px;
-            position: absolute;
-            background: #c4c4c4;
-            border-radius: 20px;
-          "
-        ></div>
-        <img
-          class="Image26"
-          style="
-            width: 290px;
-            height: 291.2px;
-            left: 0px;
-            top: -20px;
-            position: absolute;
-            border-radius: 20px;
-          "
-          src="https://via.placeholder.com/290x291"
-        />
-      </div>
-      <div
-        class="PlantainAndPintoStewWithAjiVerde"
-        style="
-          left: 330px;
-          top: 13px;
-          position: absolute;
-          color: black;
-          font-size: 24px;
-          font-family: Inter;
-          font-weight: 600;
-          word-wrap: break-word;
-        "
-      >
-        <form method="get" action="{% url 'tarif_arama' %}">
-          <div class="malzeme-secimi">
-            <label for="malzemeler">Select Ingredients:</label>
-            <select id="malzemeler" name="malzemeler" multiple>
-              {% for malzeme in malzeme_listesi %}
-              <option value="{{ malzeme.id }}">{{ malzeme.isim }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <button type="submit">Search</button>
-        </form>
-      </div>
+    
+    
+      
+      
     </div>
   </div>
 
@@ -511,6 +288,7 @@
       position: absolute;
     "
   >
+  <!--
     <button
       class="Group13927 active"
       onclick="handleButtonClick(this)"
@@ -657,7 +435,7 @@
       "
     >
       >
-    </button>
+    </button>-->
   </div>
 
   <div
@@ -682,7 +460,7 @@
           font-weight: 400;
           word-wrap: break-word;
         "
-        ><a href="{% url 'tarif_arama_deneme' %}">.</a></span
+        >.</span
       >
     </div>
     <div
@@ -723,7 +501,7 @@
           word-wrap: break-word;
         "
       >
-        <a href="{% url 'recipes' %}">Recipes</a>
+        <a href="{% url 'recipes' %}"><a href="{% url 'tarif_arama_deneme' %}">Recipes</a></a>
       </div>
       <div
         class="YourProfile"
@@ -867,7 +645,7 @@
     </div>
   </div>
 </div>
-
+<!--
 <script>
   function handleButtonClick(button) {
     // Tüm butonların "active" sınıfını kaldır
@@ -894,3 +672,4 @@
     alert(`${button.textContent.trim()} butonuna tıklandı!`);
   }
 </script>
+-->

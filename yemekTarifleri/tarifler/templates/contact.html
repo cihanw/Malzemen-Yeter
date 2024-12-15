@@ -95,7 +95,7 @@
       <div class="Malzemen Yeter" style="left: 0px; top: 0px; position: absolute"><span style="color: black; font-size: 40px; font-family: Lobster; font-weight: 400; word-wrap: break-word">Malzemen Yeter</span><span style="color: #FF7426; font-size: 40px; font-family: Lobster; font-weight: 400; word-wrap: break-word">.</span></div>
       <div class="Group824" style="width: 886px; height: 19px; left: 397px; top: 16px; position: absolute">
         <div class="Home" style="left: 0px; top: 0px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word"><a href= "{% url 'main_page' %}">Home</a></div>
-        <div class="Recipes" style="left: 105px; top: 0px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word"><a href= "{% url 'recipes' %}">Recipes</a></div>
+        <div class="Recipes" style="left: 105px; top: 0px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word"><a href= "{% url 'recipes' %}"><a href="{% url 'tarif_arama_deneme' %}">Recipes</a></a></div>
         
         <div class="YourProfile" style="left: 801px; top: 0px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word">{% if user.is_authenticated %}
           <a href="{% url 'your_profile' %}">Your Profile</a>

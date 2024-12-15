@@ -5,34 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yeni Tarif Ekle</title>
     <style>
-      /* Dropdown malzeme listesi */
-      .malzeme-container {
-        max-height: 200px;
-        overflow-y: auto;
-        border: 1px solid #ccc;
-        display: none; /* Başlangıçta gizli */
-      }
-
-      .malzeme-item {
-        padding: 5px;
-        cursor: pointer;
-      }
-
-      .malzeme-item:hover {
-        background-color: #f0f0f0;
-      }
-
-      .selected-malzemeler {
-        margin-top: 10px;
-      }
-
-      .selected-malzeme {
-        display: inline-block;
-        margin-right: 10px;
-        padding: 5px;
-        background-color: #e0e0e0;
-        border-radius: 5px;
-      }
+      /* CSS Kodlarınız (Eğer varsa) */
     </style>
   </head>
   <body>
@@ -40,7 +13,6 @@
       <ul>
         <li><a href="{% url 'main_page' %}">Anasayfa</a></li>
         <li><a href="{% url 'recipes' %}">Tarif Listesi</a></li>
-        <!-- <li><a href="{% url 'tarif_ekle' %}">Tarif Ekle</a></li> -->
       </ul>
     </nav>
 
@@ -53,7 +25,11 @@
       <label for="kategori">Kategori:</label>
       <input type="text" id="kategori" name="kategori" required /><br /><br />
 
-      <!-- Malzeme seçimi -->
+      
+      <label for="resim">Resim:</label>
+      <input type="file" name="resim" id="resim"><br>
+       
+
       <label>Malzemeler:</label><br />
       <input
         type="text"
@@ -76,9 +52,11 @@
       <br />
 
       <div class="selected-malzemeler" id="selected-malzemeler"></div>
-      <br />
 
-      <!-- Tarif metni ekle -->
+      <!-- Seçilen malzemelerin ID'lerini göndermek için hidden input -->
+      <input type="hidden" id="malzeme-ids" name="malzemeler" />
+
+      <br /><br />
       <label for="tarif">Tarif:</label><br />
       <textarea
         id="tarif"
@@ -93,8 +71,9 @@
       <button type="submit" id="submit-btn" disabled>Tarif Ekle</button>
     </form>
 
+    <!-- JavaScript Kodları -->
     <script>
-      // Malzeme listesine tıklama işlemi
+      // Buraya JavaScript kodlarını yapıştırın
       const malzemeListesi = document.getElementById("malzeme-listesi");
       const selectedMalzemeler = document.getElementById("selected-malzemeler");
       const submitBtn = document.getElementById("submit-btn");
@@ -132,14 +111,12 @@
         });
       }
 
-      // Malzeme seçme işlemi
       malzemeListesi.addEventListener("click", function (event) {
         if (event.target.classList.contains("malzeme-item")) {
           const malzemeId = event.target.getAttribute("data-id");
           const malzemeIsim = event.target.textContent;
 
-          // Aynı malzeme bir kez seçilebilir, zaten seçiliyse işlem yapılmaz
-          if (isMalzemeAlreadySelected(malzemeIsim)) {
+          if (isMalzemeAlreadySelected(malzemeId)) {
             return;
           }
 
@@ -147,52 +124,60 @@
           selectedMalzemeDiv.classList.add("selected-malzeme");
           selectedMalzemeDiv.textContent = malzemeIsim;
 
-          const malzemeData = {
-            id: malzemeId,
-            isim: malzemeIsim,
-          };
+          selectedMalzemeDiv.setAttribute("data-id", malzemeId);
 
           selectedMalzemeDiv.addEventListener("click", function () {
             selectedMalzemeler.removeChild(selectedMalzemeDiv);
+            updateHiddenInput();
             updateSubmitButtonState();
-            malzemeListesi.style.display = "block"; // Listeyi tekrar aç
           });
 
           selectedMalzemeler.appendChild(selectedMalzemeDiv);
+
+          updateHiddenInput();
           updateSubmitButtonState();
         }
       });
 
-      // Seçili malzeme kontrolü
-      function isMalzemeAlreadySelected(malzemeIsim) {
+      function updateHiddenInput() {
+        const selectedItems =
+          selectedMalzemeler.getElementsByClassName("selected-malzeme");
+        const selectedIds = Array.from(selectedItems).map((item) =>
+          item.getAttribute("data-id")
+        );
+
+        document.getElementById("malzeme-ids").value = selectedIds.join(",");
+      }
+
+      function isMalzemeAlreadySelected(malzemeId) {
         const selectedItems =
           selectedMalzemeler.getElementsByClassName("selected-malzeme");
         for (let item of selectedItems) {
-          if (item.textContent === malzemeIsim) {
-            return true; // Malzeme zaten seçili
+          if (item.getAttribute("data-id") === malzemeId) {
+            return true;
           }
         }
         return false;
       }
 
-      // Tarifin ve malzeme seçiminin kontrolü
       function updateSubmitButtonState() {
         const tarifText = tarifInput.value.trim();
         const baslikText = baslikInput.value.trim();
         const kategoriText = kategoriInput.value.trim();
+        const malzemeIds = document.getElementById("malzeme-ids").value;
 
         if (
           tarifText.length > 0 &&
           baslikText.length > 0 &&
-          kategoriText.length > 0
+          kategoriText.length > 0 &&
+          malzemeIds.length > 0
         ) {
-          submitBtn.disabled = false; // Butonu etkinleştir
+          submitBtn.disabled = false;
         } else {
-          submitBtn.disabled = true; // Butonu devre dışı bırak
+          submitBtn.disabled = true;
         }
       }
 
-      // Tarifin her değişikliğinde buton durumunu güncelle
       tarifInput.addEventListener("input", updateSubmitButtonState);
       baslikInput.addEventListener("input", updateSubmitButtonState);
       kategoriInput.addEventListener("input", updateSubmitButtonState);

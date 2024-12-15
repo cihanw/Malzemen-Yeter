@@ -39,28 +39,39 @@ def tarif_arama(request):
 
 @login_required(login_url='main_page')
 def tarif_ekle(request):
-    malzemeler = Malzeme.objects.all()
-    
+    malzemeler = Malzeme.objects.all()  # Tüm malzemeleri al
+
     if request.method == 'POST':
-        if Tarif.olusturan_id != User:
-            
-            return redirect('main_page')
-        
         baslik = request.POST.get('baslik')
         kategori = request.POST.get('kategori')
         tarif = request.POST.get('tarif')
-        secilen_malzemeler = request.POST.getlist('malzemeler')  # Multiple malzemeler
+        secilen_malzemeler = request.POST.get('malzemeler')  # '1,2,3' şeklinde gelir
+
+        resim = request.FILES.get('resim')
         
+        # ID'leri listeye dönüştür
+        secilen_malzemeler_listesi = secilen_malzemeler.split(',')  # ['1', '2', '3']
+
+        if not baslik or not kategori or not tarif:
+            messages.error(request, "Lütfen tüm alanları doldurun.")
+            return redirect('tarif_ekle')
+
         # Yeni tarif oluşturuluyor
-        tarif_obj = Tarif.objects.create(baslik=baslik, kategori=kategori, tarif=tarif, olusturan_id=request.user)
-        
-        # Seçilen malzemeleri tarif objesine ekliyoruz
-        for malzeme_id in secilen_malzemeler:
-            malzeme = Malzeme.objects.get(id=malzeme_id)  # Malzeme objesini al
-            tarif_obj.malzemeler.add(malzeme)  # ManyToMany ilişkilendirmesi yapılıyor
-        
-        tarif_obj.save()  # Tarifi kaydediyoruz
-        return redirect('recipes')
+        tarif_obj = Tarif.objects.create(
+            baslik=baslik,
+            kategori=kategori,
+            tarif=tarif,
+            olusturan_id=request.user.id,
+            resim = resim
+        )
+
+        # ManyToMany ilişkilendirme
+        malzeme_objs = Malzeme.objects.filter(id__in=secilen_malzemeler_listesi)  # Liste olarak kullan
+        tarif_obj.malzemeler.add(*malzeme_objs)  # Malzemeleri ManyToMany ilişkisine ekle
+
+        tarif_obj.save()  # Tarifi kaydet
+        messages.success(request, "Tarif başarıyla kaydedildi!")
+        return redirect('recipes')  # Başarılı yönlendirme
 
     return render(request, 'tarif_ekle.html', {'malzemeler': malzemeler})
 
@@ -136,7 +147,7 @@ def tarif_arama_deneme(request):
         # Filtrelenmiş tarifleri döndür
         tarifler = filtered_tarifler
 
-    return render(request, 'deneme_filtre.html', {'form': form, 'tarifler': tarifler})
+    return render(request, 'recipes.html', {'form': form, 'tarifler': tarifler})
 
 def register(request):
     if request.method == 'POST':

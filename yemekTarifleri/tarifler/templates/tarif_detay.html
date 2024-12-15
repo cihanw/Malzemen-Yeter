@@ -6,6 +6,13 @@
   </head>
   <body>
     <h1>{{ tarif.baslik }}</h1>
+    
+    {% if tarif.resim %}
+      <img src="{{ tarif.resim.url }}" alt="{{ tarif.baslik }}" style="max-width: 300px;">
+    {% else %}
+      <p>Görsel mevcut değil</p>
+    {% endif %}
+    
     <h3>Malzemeler:</h3>
 
     {% for malzeme in tarif.malzemeler.all %}
@@ -14,6 +21,11 @@
 
     <h3>Tarif:</h3>
     <p>{{ tarif.tarif }}</p>
-    <a href="{% url 'main_page' %}">Geri dön</a>
+
+    
+    
+    <h1>Creator: {{ tarif.olusturan }}</h1>
+
+    <a href="{% url 'recipes' %}"><a href="{% url 'tarif_arama_deneme' %}">Geri dön</a></a>
   </body>
 </html>
